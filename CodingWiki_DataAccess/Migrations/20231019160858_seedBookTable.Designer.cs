@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodingWiki_DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231018170156_changePriceColumnToDecimalInBooksTable")]
-    partial class changePriceColumnToDecimalInBooksTable
+    [Migration("20231019160858_seedBookTable")]
+    partial class seedBookTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,19 +33,53 @@ namespace CodingWiki_DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IDBook"));
 
                     b.Property<string>("ISBN")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(10, 5)
+                        .HasColumnType("decimal(10,5)");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IDBook");
 
                     b.ToTable("Books");
+
+                    b.HasData(
+                        new
+                        {
+                            IDBook = 1,
+                            ISBN = "CreangaFilms",
+                            Price = 12.99m,
+                            Title = "Amintiri din copilarie"
+                        },
+                        new
+                        {
+                            IDBook = 2,
+                            ISBN = "CreangaFilms",
+                            Price = 15.99m,
+                            Title = "Luceafarul"
+                        });
+                });
+
+            modelBuilder.Entity("CodingWiki_Model.Models.Genre", b =>
+                {
+                    b.Property<int>("GenreId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GenreId"));
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("GenreId");
+
+                    b.ToTable("Genres");
                 });
 #pragma warning restore 612, 618
         }

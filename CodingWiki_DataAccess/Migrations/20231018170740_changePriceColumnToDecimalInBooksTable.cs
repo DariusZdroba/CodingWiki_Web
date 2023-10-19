@@ -13,7 +13,9 @@ namespace CodingWiki_DataAccess.Migrations
             migrationBuilder.AlterColumn<decimal>(
                 name: "Price",
                 table: "Books",
-                type: "decimal(18,2)",
+                type: "decimal(10,5)",
+                precision: 10,
+                scale: 5,
                 nullable: false,
                 oldClrType: typeof(double),
                 oldType: "float");
@@ -28,7 +30,9 @@ namespace CodingWiki_DataAccess.Migrations
                 type: "float",
                 nullable: false,
                 oldClrType: typeof(decimal),
-                oldType: "decimal(18,2)");
+                oldType: "decimal(10,5)",
+                oldPrecision: 10,
+                oldScale: 5);
         }
     }
 }
